@@ -7,16 +7,16 @@ const typeEvents = [{
 }]
 
 class LoopForTypeEvents{
-    constructor(cgce_emp, dateInicialAndFinalOfMonth){
-        this.cgce_emp = cgce_emp
-        this.dateInicialAndFinalOfMonth = dateInicialAndFinalOfMonth
+    constructor(dataRequest){
+        this.dataRequest = dataRequest
     }
 
     process(){
         for(let typeEvent of typeEvents){
             const event = typeEvent['events']
+            this.dataRequest['downloadevent'] = event
 
-            const loopForTypeNFAndCNPJ = new LoopForTypeNFAndCNPJ(this.cgce_emp, this.dateInicialAndFinalOfMonth, event)
+            const loopForTypeNFAndCNPJ = new LoopForTypeNFAndCNPJ(this.dataRequest)
             loopForTypeNFAndCNPJ.process()
         }
     }

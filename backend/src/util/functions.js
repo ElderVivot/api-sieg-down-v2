@@ -60,12 +60,11 @@ module.exports.zeroLeft = zeroLeft
 
 const daysInitialAndEndOfMonth = (month, year) => {
     const dateInitial = new Date(year, month-1, 1)
-  
-    const dateEnd = new Date(year, month, 0)
+    const dateFinal = new Date(year, month, 0)
     
     return{
         dateInitial: `${dateInitial.getFullYear()}-${zeroLeft(dateInitial.getMonth()+1)}-${zeroLeft(dateInitial.getDate())}`, 
-        dateEnd: `${dateEnd.getFullYear()}-${zeroLeft(dateEnd.getMonth()+1)}-${zeroLeft(dateEnd.getDate())}`
+        dateFinal: `${dateFinal.getFullYear()}-${zeroLeft(dateFinal.getMonth()+1)}-${zeroLeft(dateFinal.getDate())}`
     }
 }
 module.exports.daysInitialAndEndOfMonth = daysInitialAndEndOfMonth

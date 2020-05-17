@@ -2,12 +2,12 @@ const { returnMonthsOfYear, daysInitialAndEndOfMonth } = require('../util/functi
 const LoopForTypeEvents = require('./LoopForTypeEvents')
 
 class LoopForCompetences{
-    constructor(monthInicial, yearInicial, monthFinal, yearFinal, cgce_emp){
+    constructor(monthInicial, yearInicial, monthFinal, yearFinal, dataRequest){
         this.monthInicial = monthInicial
         this.yearInicial = yearInicial
         this.monthFinal = monthFinal
         this.yearFinal = yearFinal
-        this.cgce_emp = cgce_emp
+        this.dataRequest = dataRequest
     }
 
     process(){
@@ -17,8 +17,10 @@ class LoopForCompetences{
             
             for(let month of months){
                 const dateInicialAndFinalOfMonth = daysInitialAndEndOfMonth(month, year)
+                this.dataRequest['dataInicio'] = dateInicialAndFinalOfMonth.dateInitial
+                this.dataRequest['dataFim'] = dateInicialAndFinalOfMonth.dateFinal
 
-                const loopForTypeEvents = new LoopForTypeEvents(this.cgce_emp, dateInicialAndFinalOfMonth)
+                const loopForTypeEvents = new LoopForTypeEvents(this.dataRequest)
                 loopForTypeEvents.process()
             }
 
