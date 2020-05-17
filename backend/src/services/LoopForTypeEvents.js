@@ -11,13 +11,16 @@ class LoopForTypeEvents{
         this.dataRequest = dataRequest
     }
 
-    process(){
+    async process(){
         for(let typeEvent of typeEvents){
             const event = typeEvent['events']
+
+            console.log(`\t\t- Iniciando processamento dos tipos dos eventos ${event}`)
+
             this.dataRequest['downloadevent'] = event
 
             const loopForTypeNFAndCNPJ = new LoopForTypeNFAndCNPJ(this.dataRequest)
-            loopForTypeNFAndCNPJ.process()
+            return await loopForTypeNFAndCNPJ.process()
         }
     }
 }

@@ -16,7 +16,6 @@ try {
     }
 }
 
-
 class Applicattion{
     constructor(){
         this.getExtractCompanies = []
@@ -30,6 +29,7 @@ class Applicattion{
         this.getExtractCompanies = new GetExtractCompanies()
         const companies = await this.getExtractCompanies.getData()
         for(let companie of companies){
+            console.log(`- Iniciando processamento da empresa ${companie['codi_emp']} - ${companie['nome_emp']}`)
 
             const cgce_emp = companie['cgce_emp']
             // ignora as empresas com CNPJ inválido
@@ -47,7 +47,7 @@ class Applicattion{
                 this.dataRequest
             )
 
-            loopForCompetence.process()
+            await loopForCompetence.process()
         }
     }
 }

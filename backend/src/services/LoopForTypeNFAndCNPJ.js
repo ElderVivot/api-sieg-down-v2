@@ -1,3 +1,5 @@
+const LoopForSkip = require('./LoopForSkip')
+
 const typeNFAndCNPJs = [{
     typeNF: 'nfe',
     typeCNPJ: 'cnpjDest'
@@ -11,17 +13,18 @@ class LoopForTypeNFAndCNPJ{
         this.dataRequest = dataRequest
     }
 
-    process(){
+    async process(){
         for(let typeNFAndCNPJ of typeNFAndCNPJs){
-            let dataRequest = { ...this.dataRequest }
+            console.log(`\t\t\t- Iniciando processamento ${typeNFAndCNPJ['typeNF']} - ${typeNFAndCNPJ['typeCNPJ']}`)
 
-            const typeCNPJ = typeNFAndCNPJ['typeCNPJ']
+            let dataRequest = { ...this.dataRequest }
 
             dataRequest['xmltype'] = typeNFAndCNPJ['typeNF']
             dataRequest[typeNFAndCNPJ['typeCNPJ']] = dataRequest['cgce_emp']
             delete dataRequest.cgce_emp
 
-            console.log(dataRequest)
+            const loopForSkip = new LoopForSkip(dataRequest)
+            return await loopForSkip.process()
         }
     }
 }
