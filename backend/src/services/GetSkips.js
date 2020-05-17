@@ -10,7 +10,7 @@ class GetSkips{
 
     async getData(){
         try {
-            const responseSkips = await api.get(`/skips`)
+            const responseSkips = await api.get(this.url)
             if(responseSkips.statusText === "OK"){
                 this.skips = responseSkips.data   
             }
