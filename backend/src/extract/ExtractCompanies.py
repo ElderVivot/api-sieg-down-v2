@@ -25,6 +25,7 @@ class ExtractCompanies():
 
         self._connectionMongo = ConnectMongo()
         self._dbMongo = self._connectionMongo.getConnetion()
+        self._dbMongo['ExtractCompanies'].drop()
         self._collection = self._dbMongo['ExtractCompanies']
 
     def exportData(self):
