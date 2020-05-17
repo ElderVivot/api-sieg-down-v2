@@ -25,7 +25,7 @@ class Applicattion{
                 this.competenceInicialAndFinal.yearInicial,
                 this.competenceInicialAndFinal.monthFinal,
                 this.competenceInicialAndFinal.yearFinal,
-                companie
+                cgce_emp
             )
 
             loopForCompetence.process()

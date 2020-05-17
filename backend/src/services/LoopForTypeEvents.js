@@ -1,3 +1,5 @@
+const LoopForTypeNFAndCNPJ = require('./LoopForTypeNFAndCNPJ')
+
 const typeEvents = [{
     events: true
 }, {
@@ -5,14 +7,17 @@ const typeEvents = [{
 }]
 
 class LoopForTypeEvents{
-    constructor(companie, dateInicialAndFinalOfMonth){
-        this.companie = companie
+    constructor(cgce_emp, dateInicialAndFinalOfMonth){
+        this.cgce_emp = cgce_emp
         this.dateInicialAndFinalOfMonth = dateInicialAndFinalOfMonth
     }
 
     process(){
         for(let typeEvent of typeEvents){
-            console.log(typeEvent)
+            const event = typeEvent['events']
+
+            const loopForTypeNFAndCNPJ = new LoopForTypeNFAndCNPJ(this.cgce_emp, this.dateInicialAndFinalOfMonth, event)
+            loopForTypeNFAndCNPJ.process()
         }
     }
 }
