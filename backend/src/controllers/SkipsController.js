@@ -2,7 +2,7 @@ const Skips = require('../models/Skips')
 
 module.exports = {
     async show(req, res){
-        const skips = await Skips.find( { ...req.query } )
+        const skips = await Skips.findOne( { ...req.query } )
 
         console.log(` - Skips.index`)
 
