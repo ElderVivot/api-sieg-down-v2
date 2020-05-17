@@ -68,3 +68,12 @@ const daysInitialAndEndOfMonth = (month, year) => {
     }
 }
 module.exports.daysInitialAndEndOfMonth = daysInitialAndEndOfMonth
+
+function implementsFilterInURL(baseURL='', filter={}){
+    let url = `${baseURL}?`
+    for (let [key, value] of Object.entries(filter)) {
+        url += `${key}=${value}&`
+    }
+    return url
+}
+module.exports.implementsFilterInURL = implementsFilterInURL

@@ -38,6 +38,7 @@ class Applicattion{
             }
 
             this.dataRequest['cgce_emp'] = cgce_emp
+            this.dataRequest['codi_emp'] = companie['codi_emp']
             
             const loopForCompetence = new LoopForCompetence(
                 this.competenceInicialAndFinal.monthInicial,

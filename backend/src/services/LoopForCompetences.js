@@ -19,6 +19,8 @@ class LoopForCompetences{
                 console.log(`\t- Iniciando processamento do mês ${month}/${year}`)
 
                 const dateInicialAndFinalOfMonth = daysInitialAndEndOfMonth(month, year)
+                this.dataRequest['month'] = month
+                this.dataRequest['year'] = year
                 this.dataRequest['dataInicio'] = dateInicialAndFinalOfMonth.dateInitial
                 this.dataRequest['dataFim'] = dateInicialAndFinalOfMonth.dateFinal
 

@@ -19,9 +19,8 @@ class LoopForTypeNFAndCNPJ{
 
             let dataRequest = { ...this.dataRequest }
 
-            dataRequest['xmltype'] = typeNFAndCNPJ['typeNF']
-            dataRequest[typeNFAndCNPJ['typeCNPJ']] = dataRequest['cgce_emp']
-            delete dataRequest.cgce_emp
+            dataRequest['typeNF'] = typeNFAndCNPJ['typeNF']
+            dataRequest['typeCNPJ'] = typeNFAndCNPJ['typeCNPJ']
 
             const loopForSkip = new LoopForSkip(dataRequest)
             return await loopForSkip.process()

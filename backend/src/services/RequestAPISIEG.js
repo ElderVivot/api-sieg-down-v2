@@ -3,7 +3,6 @@ const axios = require('axios')
 class RequestAPISIEG{
     constructor(dataRequest){
         this.dataRequest = dataRequest
-        this.dataRequest['take'] = 50 // pega 50 notas
     }
 
     async process(){
