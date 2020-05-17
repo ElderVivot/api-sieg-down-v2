@@ -22,10 +22,15 @@ class Applicattion{
         this.competenceInicial = '01/2020'
         this.competenceFinal = '05/2020'
         this.competenceInicialAndFinal = returnCompetenceStartEnd(this.competenceInicial, this.competenceFinal)
-        this.dataRequest = { ...dataApi } // vai conter os dados necessários pra fazer a requisição
+        this.dataRequest = { ...dataApi } // vai conter os dados necessários pra fazer a requisição e alguns outros úteis pro procesamento
+        // let dateNow = new Date()
+        // dateNow.setMinutes(dateNow.getMinutes() - dateNow.getTimezoneOffset())
+        this.dataRequest['dateHourInicialLog'] = new Date().toLocaleString('pt-BR', {timezone: "America/Sao_Paulo"})
     }
 
     async process() {
+        let sequencial = 1
+
         this.getExtractCompanies = new GetExtractCompanies()
         const companies = await this.getExtractCompanies.getData()
         for(let companie of companies){
@@ -39,6 +44,7 @@ class Applicattion{
 
             this.dataRequest['cgce_emp'] = cgce_emp
             this.dataRequest['codi_emp'] = companie['codi_emp']
+            this.dataRequest['sequencial'] = sequencial
             
             const loopForCompetence = new LoopForCompetence(
                 this.competenceInicialAndFinal.monthInicial,

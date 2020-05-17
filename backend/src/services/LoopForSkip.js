@@ -1,6 +1,7 @@
 const RequestAPISIEG = require('./RequestAPISIEG')
 const GetSkips = require('./GetSkips')
 const PostSkips = require('./PostSkips')
+const PostLogSIEG = require('./PostLogSIEG')
 
 class LoopForSkip{
     constructor(dataRequest){
@@ -40,6 +41,7 @@ class LoopForSkip{
         let qtdNotesSkip = numberSkipAndQtdNotes.qtdNotes
 
         while(true){
+            const dateHourProcessLog = new Date().toLocaleString('pt-BR', {timezone: "America/Sao_Paulo"})
             
             const dataRequest = {
                 apikey: this.dataRequest.apikey,
@@ -52,10 +54,40 @@ class LoopForSkip{
             }
             dataRequest[this.dataRequest.typeCNPJ] = this.dataRequest.cgce_emp
             dataRequest['skip'] = numberSkip
+
+            const dataLog = {
+                dateHourInicialLog: this.dataRequest.dateHourInicialLog,
+                sequencial: this.dataRequest.sequencial,
+                dateHourProcessLog: dateHourProcessLog,
+                numberSkip: numberSkip,
+                ...filterSkip
+            }
             
-            const requestAPISIEG = new RequestAPISIEG(dataRequest)
-            const notes = await requestAPISIEG.process()
-            const qtdNotes = notes.length || 0
+            let notes
+            let qtdNotes
+            try {
+                const requestAPISIEG = new RequestAPISIEG(dataRequest)
+                notes = await requestAPISIEG.process()
+                qtdNotes = notes.length || 0
+            } catch (error) {
+                notes = []
+                qtdNotes = 0
+
+                const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'error_request' })
+                await postLogSIEG.postData()
+            }
+
+            if(qtdNotes === 0){
+                const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'not_exists_notes_this_skip' })
+                await postLogSIEG.postData()
+                break
+            }
+
+            if(qtdNotesSkip === qtdNotes){
+                const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'not_exists_new_notes_this_skip' })
+                await postLogSIEG.postData()
+                break
+            }
 
             if(qtdNotes > 0 && qtdNotes <= 50){
                 const postSkips = new PostSkips(filterSkip, { ...filterSkip, numberSkip, qtdNotes })
@@ -65,15 +97,8 @@ class LoopForSkip{
                 }
             }
 
-            if(qtdNotes === 0 || qtdNotesSkip === qtdNotes || qtdNotes < 50){
-                break
-            }
             numberSkip++
         }
-        // const requestAPISIEG = new RequestAPISIEG(this.dataRequest)
-        // const notes = await requestAPISIEG.process()        
-        // console.log(notes)
-        // return notes
     }
 }
 
