@@ -5,12 +5,14 @@ const LogSIEG = new mongoose.Schema({
     dateHourInicialLog: String,
     sequencial: Number,
     dateHourProcessLog: String,
+    typeLog: String,
     codi_emp: Number,
     year: Number,
     month: Number,
     typeNF: String,
     typeCNPJ: String,
     event: Boolean,
+    numberSkip: Number,
     keyNF: String  
 })
 
