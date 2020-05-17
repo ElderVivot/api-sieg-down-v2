@@ -52,3 +52,20 @@ function returnMonthsOfYear(year, filterMonthStart, filterYearStart, filterMonth
     }
 }
 module.exports.returnMonthsOfYear = returnMonthsOfYear
+
+const zeroLeft = (valueInsert, countZeros=2) => {
+    return ("0000".repeat(countZeros) + valueInsert).slice(-countZeros)
+}
+module.exports.zeroLeft = zeroLeft
+
+const daysInitialAndEndOfMonth = (month, year) => {
+    const dateInitial = new Date(year, month-1, 1)
+  
+    const dateEnd = new Date(year, month, 0)
+    
+    return{
+        dateInitial: `${dateInitial.getFullYear()}-${zeroLeft(dateInitial.getMonth()+1)}-${zeroLeft(dateInitial.getDate())}`, 
+        dateEnd: `${dateEnd.getFullYear()}-${zeroLeft(dateEnd.getMonth()+1)}-${zeroLeft(dateEnd.getDate())}`
+    }
+}
+module.exports.daysInitialAndEndOfMonth = daysInitialAndEndOfMonth

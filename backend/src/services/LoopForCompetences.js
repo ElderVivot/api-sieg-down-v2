@@ -1,11 +1,13 @@
-const { returnMonthsOfYear } = require('../util/functions')
+const { returnMonthsOfYear, daysInitialAndEndOfMonth } = require('../util/functions')
+const LoopForTypeEvents = require('./LoopForTypeEvents')
 
 class LoopForCompetences{
-    constructor(monthInicial, yearInicial, monthFinal, yearFinal){
+    constructor(monthInicial, yearInicial, monthFinal, yearFinal, companie){
         this.monthInicial = monthInicial
         this.yearInicial = yearInicial
         this.monthFinal = monthFinal
         this.yearFinal = yearFinal
+        this.companie = companie
     }
 
     process(){
@@ -14,7 +16,10 @@ class LoopForCompetences{
             const months = returnMonthsOfYear(year, this.monthInicial, this.yearInicial, this.monthFinal, this.yearFinal)
             
             for(let month of months){
-                console.log(`${month}/${year}`)
+                const dateInicialAndFinalOfMonth = daysInitialAndEndOfMonth(month, year)
+
+                const loopForTypeEvents = new LoopForTypeEvents(this.companie, dateInicialAndFinalOfMonth)
+                loopForTypeEvents.process()
             }
 
             year++
