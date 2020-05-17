@@ -4,7 +4,7 @@ module.exports = {
     async show(req, res){
         const skips = await Skips.findOne( { ...req.query } )
 
-        console.log(` - Skips.index`)
+        console.log(` - Skips.show --> ${JSON.stringify(req.query)}`)
 
         return res.json(skips)
     },
@@ -12,7 +12,7 @@ module.exports = {
     async store(req, res) {        
         const skips = await Skips.create( { ...req.body } )
 
-        console.log(` - Skips.store --> ${req.body.codi_emp}`)
+        console.log(` - Skips.store --> ${JSON.stringify(req.body)}`)
 
         return res.json(skips)
     },
@@ -23,7 +23,7 @@ module.exports = {
                 ...req.body
             })
 
-            console.log(` - Skips.update --> ${req.body.codi_emp}`)
+            console.log(` - Skips.update --> ${JSON.stringify(req.query)}`)
     
             return res.json(skips)
         } catch (error) {
