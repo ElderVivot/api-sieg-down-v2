@@ -25,7 +25,7 @@ class LoopForCompetences{
                 this.dataRequest['dataFim'] = dateInicialAndFinalOfMonth.dateFinal
 
                 const loopForTypeEvents = new LoopForTypeEvents(this.dataRequest)
-                return await loopForTypeEvents.process()
+                await loopForTypeEvents.process()
             }
 
             year++

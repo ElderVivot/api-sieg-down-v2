@@ -20,7 +20,7 @@ class LoopForTypeEvents{
             this.dataRequest['downloadevent'] = event
 
             const loopForTypeNFAndCNPJ = new LoopForTypeNFAndCNPJ(this.dataRequest)
-            return await loopForTypeNFAndCNPJ.process()
+            await loopForTypeNFAndCNPJ.process()
         }
     }
 }

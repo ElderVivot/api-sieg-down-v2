@@ -1,5 +1,6 @@
 const RequestAPISIEG = require('./RequestAPISIEG')
 const GetSkips = require('./GetSkips')
+const PostSkips = require('./PostSkips')
 
 class LoopForSkip{
     constructor(dataRequest){
@@ -23,15 +24,16 @@ class LoopForSkip{
     }
 
     async process(){
-
-        const getSkips = new GetSkips({
+        const filterSkip = {
             codi_emp: this.dataRequest.codi_emp,
             year: this.dataRequest.year,
             month: this.dataRequest.month,
             typeNF: this.dataRequest.typeNF,
             typeCNPJ: this.dataRequest.typeCNPJ,
             event: this.dataRequest.downloadevent
-        })
+        }
+
+        const getSkips = new GetSkips(filterSkip)
         const skip = await getSkips.getData()
         const numberSkipAndQtdNotes = this.getNumberSkipAndQtdNotes(skip)
         let numberSkip = numberSkipAndQtdNotes.numberSkip
@@ -54,6 +56,14 @@ class LoopForSkip{
             const requestAPISIEG = new RequestAPISIEG(dataRequest)
             const notes = await requestAPISIEG.process()
             const qtdNotes = notes.length || 0
+
+            if(qtdNotes > 0 && qtdNotes <= 50){
+                const postSkips = new PostSkips(filterSkip, { ...filterSkip, numberSkip, qtdNotes })
+                await postSkips.postData()
+                if(qtdNotes < 50){
+                    break
+                }
+            }
 
             if(qtdNotes === 0 || qtdNotesSkip === qtdNotes || qtdNotes < 50){
                 break

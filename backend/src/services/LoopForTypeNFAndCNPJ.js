@@ -23,7 +23,7 @@ class LoopForTypeNFAndCNPJ{
             dataRequest['typeCNPJ'] = typeNFAndCNPJ['typeCNPJ']
 
             const loopForSkip = new LoopForSkip(dataRequest)
-            return await loopForSkip.process()
+            await loopForSkip.process()
         }
     }
 }
