@@ -3,9 +3,10 @@
 const { returnCompetenceStartEnd } = require('./util/functions')
 const GetExtractCompanies = require('./services/GetExtractCompanies')
 const LoopForCompetence = require('./services/LoopForCompetences')
+const PostProcessFrequency = require('./services/PostProcessFrequency')
 
-// é necessário criar um arquivo dataApi.json com os dados da requisição, se o arquivo não existir
-// seta configurações gerais. Pois este dataApi não vai subir pro gitHub
+// é necessário criar um arquivo settings.json com os dados da requisição, se o arquivo não existir
+// seta configurações gerais. Pois este settings não vai subir pro gitHub
 let settings = {}
 try {
     settings = require('./settings.json')
@@ -27,15 +28,16 @@ class Applicattion{
         // let dateNow = new Date()
         // dateNow.setMinutes(dateNow.getMinutes() - dateNow.getTimezoneOffset())
         this.settings['dateHourInicialLog'] = new Date().toLocaleString('pt-BR', {timezone: "America/Sao_Paulo"})
+        this.sequencial = 1
     }
 
     async process() {
-        let sequencial = 1
+        const dateHourInicialProcessLog = new Date().toLocaleString('pt-BR', {timezone: "America/Sao_Paulo"})
 
         this.getExtractCompanies = new GetExtractCompanies()
         const companies = await this.getExtractCompanies.getData()
         for(let companie of companies){
-            console.log(`- Iniciando processamento da empresa ${companie['codi_emp']} - ${companie['nome_emp']}`)
+            console.log(`- Iniciando processamento da empresa ${companie['codi_emp']} - ${companie['nome_emp']} | Loop ${this.sequencial}`)
 
             const cgce_emp = companie['cgce_emp']
             // ignora as empresas com CNPJ inválido
@@ -46,7 +48,7 @@ class Applicattion{
             this.settings['cgce_emp'] = cgce_emp
             this.settings['codi_emp'] = companie['codi_emp']
             this.settings['nome_emp'] = companie['nome_emp']
-            this.settings['sequencial'] = sequencial
+            this.settings['sequencial'] = this.sequencial
             
             const loopForCompetence = new LoopForCompetence(
                 this.competenceInicialAndFinal.monthInicial,
@@ -58,8 +60,41 @@ class Applicattion{
 
             await loopForCompetence.process()
         }
+
+        const dateHourFinalProcessLog = new Date().toLocaleString('pt-BR', {timezone: "America/Sao_Paulo"})
+
+        const postProcessFrequency = new PostProcessFrequency({ 
+            dateHourInicialLog: this.settings['dateHourInicialLog'],
+            sequencial: this.sequencial,
+            dateHourInicialProcessLog,
+            dateHourFinalProcessLog
+        })
+        await postProcessFrequency.postData()
+
+        this.sequencial++
     }
 }
 
 applicattion = new Applicattion()
-applicattion.process()
+
+function loopExportNotas(){
+    return new Promise((resolve, reject) => {
+        setTimeout( async () => {
+            try {
+                resolve(await applicattion.process())
+                loopExportNotas()
+            } catch (error) {
+                reject('- Erro no loop de exportação das notas' + error)                
+                loopExportNotas() // mesmo com o erro vai tentar executar novamente
+            }
+        }, 1000);
+    })
+}
+
+loopExportNotas().then(() => console.log('')).catch(error => console.log(error))
+
+// const execExportNotas = async () => {
+//     await loopExportNotas()
+// }
+  
+// execExportNotas()

@@ -2,5 +2,5 @@ SELECT emp.codi_emp, emp.nome_emp, emp.cgce_emp, emp.tins_emp, emp.stat_emp, emp
        emp.dtinicio_emp
   FROM bethadba.geempre AS emp
  WHERE emp.tins_emp IN (1, 2) -- apenas CNPJ e CPF
-   AND emp.codi_emp < 9969 -- empresas exemplos não
+   AND emp.codi_emp IN (9985) -- empresas exemplos não
 ORDER BY emp.codi_emp
