@@ -42,7 +42,7 @@ function returnMonthsOfYear(year, filterMonthStart, filterYearStart, filterMonth
         return months
     } else if(year == filterYearEnd){
         let inicial = 1
-        while(inicial <= filterYearEnd){
+        while(inicial <= filterMonthEnd){
             months.push(inicial)
             inicial++
         }
