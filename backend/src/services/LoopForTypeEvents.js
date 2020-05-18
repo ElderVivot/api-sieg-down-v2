@@ -7,8 +7,8 @@ const typeEvents = [{
 }]
 
 class LoopForTypeEvents{
-    constructor(dataRequest){
-        this.dataRequest = dataRequest
+    constructor(settings){
+        this.settings = settings
     }
 
     async process(){
@@ -17,9 +17,9 @@ class LoopForTypeEvents{
 
             console.log(`\t\t- Iniciando processamento dos tipos dos eventos ${event}`)
 
-            this.dataRequest['downloadevent'] = event
+            this.settings['downloadevent'] = event
 
-            const loopForTypeNFAndCNPJ = new LoopForTypeNFAndCNPJ(this.dataRequest)
+            const loopForTypeNFAndCNPJ = new LoopForTypeNFAndCNPJ(this.settings)
             await loopForTypeNFAndCNPJ.process()
         }
     }

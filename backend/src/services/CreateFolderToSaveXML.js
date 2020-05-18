@@ -1,7 +1,10 @@
+const fs = require('fs')
 const { zeroLeft } = require('../util/functions')
 
 const createFolderToSaveXML = (settings) => {
     let wayToSaveXMLs = settings.wayToSaveXMLs
+    fs.existsSync(wayToSaveXMLs) || fs.mkdirSync(wayToSaveXMLs)
+
     const nameEmp = settings.nome_emp
     const codiEmp = settings.codi_emp
     const year = settings.year

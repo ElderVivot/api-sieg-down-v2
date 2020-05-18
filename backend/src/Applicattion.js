@@ -6,13 +6,14 @@ const LoopForCompetence = require('./services/LoopForCompetences')
 
 // é necessário criar um arquivo dataApi.json com os dados da requisição, se o arquivo não existir
 // seta configurações gerais. Pois este dataApi não vai subir pro gitHub
-let dataApi = {}
+let settings = {}
 try {
-    dataApi = require('./dataApi.json')
+    settings = require('./settings.json')
 } catch (error) {
-    dataApi = {
+    settings = {
         apikey: "apikeycorrect",
-        email: "emailexample@email.com"
+        email: "emailexample@email.com",
+        wayToSaveXMLs: "C:/notas_fiscais"
     }
 }
 
@@ -22,10 +23,10 @@ class Applicattion{
         this.competenceInicial = '01/2020'
         this.competenceFinal = '05/2020'
         this.competenceInicialAndFinal = returnCompetenceStartEnd(this.competenceInicial, this.competenceFinal)
-        this.dataRequest = { ...dataApi } // vai conter os dados necessários pra fazer a requisição e alguns outros úteis pro procesamento
+        this.settings = { ...settings } // vai conter os dados necessários pra fazer a requisição e alguns outros úteis pro procesamento
         // let dateNow = new Date()
         // dateNow.setMinutes(dateNow.getMinutes() - dateNow.getTimezoneOffset())
-        this.dataRequest['dateHourInicialLog'] = new Date().toLocaleString('pt-BR', {timezone: "America/Sao_Paulo"})
+        this.settings['dateHourInicialLog'] = new Date().toLocaleString('pt-BR', {timezone: "America/Sao_Paulo"})
     }
 
     async process() {
@@ -42,16 +43,17 @@ class Applicattion{
                 continue
             }
 
-            this.dataRequest['cgce_emp'] = cgce_emp
-            this.dataRequest['codi_emp'] = companie['codi_emp']
-            this.dataRequest['sequencial'] = sequencial
+            this.settings['cgce_emp'] = cgce_emp
+            this.settings['codi_emp'] = companie['codi_emp']
+            this.settings['nome_emp'] = companie['nome_emp']
+            this.settings['sequencial'] = sequencial
             
             const loopForCompetence = new LoopForCompetence(
                 this.competenceInicialAndFinal.monthInicial,
                 this.competenceInicialAndFinal.yearInicial,
                 this.competenceInicialAndFinal.monthFinal,
                 this.competenceInicialAndFinal.yearFinal,
-                this.dataRequest
+                this.settings
             )
 
             await loopForCompetence.process()

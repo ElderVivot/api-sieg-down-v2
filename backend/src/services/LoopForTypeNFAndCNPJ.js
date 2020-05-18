@@ -9,20 +9,20 @@ const typeNFAndCNPJs = [{
 }]
 
 class LoopForTypeNFAndCNPJ{
-    constructor(dataRequest){
-        this.dataRequest = dataRequest
+    constructor(settings){
+        this.settings = settings
     }
 
     async process(){
         for(let typeNFAndCNPJ of typeNFAndCNPJs){
             console.log(`\t\t\t- Iniciando processamento ${typeNFAndCNPJ['typeNF']} - ${typeNFAndCNPJ['typeCNPJ']}`)
 
-            let dataRequest = { ...this.dataRequest }
+            let settings = { ...this.settings }
 
-            dataRequest['typeNF'] = typeNFAndCNPJ['typeNF']
-            dataRequest['typeCNPJ'] = typeNFAndCNPJ['typeCNPJ']
+            settings['typeNF'] = typeNFAndCNPJ['typeNF']
+            settings['typeCNPJ'] = typeNFAndCNPJ['typeCNPJ']
 
-            const loopForSkip = new LoopForSkip(dataRequest)
+            const loopForSkip = new LoopForSkip(settings)
             await loopForSkip.process()
         }
     }

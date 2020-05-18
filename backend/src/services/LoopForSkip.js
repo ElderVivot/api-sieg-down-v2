@@ -5,8 +5,8 @@ const PostLogSIEG = require('./PostLogSIEG')
 const SaveNotes = require('./SaveNotes')
 
 class LoopForSkip{
-    constructor(dataRequest){
-        this.dataRequest = dataRequest
+    constructor(settings){
+        this.settings = settings
     }
 
     getNumberSkipAndQtdNotes(skip){
@@ -27,12 +27,12 @@ class LoopForSkip{
 
     async process(){
         const filterSkip = {
-            codi_emp: this.dataRequest.codi_emp,
-            year: this.dataRequest.year,
-            month: this.dataRequest.month,
-            typeNF: this.dataRequest.typeNF,
-            typeCNPJ: this.dataRequest.typeCNPJ,
-            event: this.dataRequest.downloadevent
+            codi_emp: this.settings.codi_emp,
+            year: this.settings.year,
+            month: this.settings.month,
+            typeNF: this.settings.typeNF,
+            typeCNPJ: this.settings.typeCNPJ,
+            event: this.settings.downloadevent
         }
 
         const getSkips = new GetSkips(filterSkip)
@@ -45,21 +45,21 @@ class LoopForSkip{
             const dateHourProcessLog = new Date().toLocaleString('pt-BR', {timezone: "America/Sao_Paulo"})
             
             const dataRequest = {
-                apikey: this.dataRequest.apikey,
-                email: this.dataRequest.email,
-                xmltype: this.dataRequest.typeNF,
+                apikey: this.settings.apikey,
+                email: this.settings.email,
+                xmltype: this.settings.typeNF,
                 take: 50,
-                dataInicio: this.dataRequest.dataInicio,
-                dataFim: this.dataRequest.dataFim,
-                downloadevent: this.dataRequest.downloadevent
+                dataInicio: this.settings.dataInicio,
+                dataFim: this.settings.dataFim,
+                downloadevent: this.settings.downloadevent
             }
-            dataRequest[this.dataRequest.typeCNPJ] = this.dataRequest.cgce_emp
+            dataRequest[this.settings.typeCNPJ] = this.settings.cgce_emp
             dataRequest['skip'] = numberSkip
-            this.dataRequest['skip'] = numberSkip
+            this.settings['skip'] = numberSkip
 
             const dataLog = {
-                dateHourInicialLog: this.dataRequest.dateHourInicialLog,
-                sequencial: this.dataRequest.sequencial,
+                dateHourInicialLog: this.settings.dateHourInicialLog,
+                sequencial: this.settings.sequencial,
                 dateHourProcessLog: dateHourProcessLog,
                 numberSkip: numberSkip,
                 ...filterSkip
@@ -96,7 +96,7 @@ class LoopForSkip{
             }
 
             if(qtdNotes > 0 && qtdNotes <= 50){
-                const saveNotes = new SaveNotes(notes, this.dataRequest)
+                const saveNotes = new SaveNotes(notes, this.settings)
                 saveNotes.process()
 
                 const postSkips = new PostSkips(filterSkip, { ...filterSkip, numberSkip, qtdNotes })
