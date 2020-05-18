@@ -40,7 +40,7 @@ class ExtractCompanies():
             print('- Exportando empresas:')
             for companie in data:
                 self._collection.update_one( { "codi_emp": companie['codi_emp'] }, { "$set": companie}, upsert=True )
-                print(f"\t -{companie['codi_emp']} - {companie['nome_emp']}")
+                print(f"\t- {companie['codi_emp']} | {companie['nome_emp']}")
 
         except Exception as e:
             print(f"Erro ao executar a consulta. O erro é: {e}")
