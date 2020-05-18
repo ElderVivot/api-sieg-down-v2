@@ -17,9 +17,9 @@ class SaveNotes{
         } else if(( this.settings.typeNF === 'nfe' || this.settings.typeNF === 'nfce' ) && this.settings.downloadevent === true){
             return returnDataInDictOrArray(data, ['procEventoNFe', 'evento', 'infEvento', ...array])
         } else if(this.settings.typeNF === 'cte' && this.settings.downloadevent === false){
-            return returnDataInDictOrArray(data, ['cteProc', 'CTe', 'infCTe', ...array])
+            return returnDataInDictOrArray(data, ['cteProc', 'CTe', 'infCte', ...array])
         } else if(this.settings.typeNF === 'cte' && this.settings.downloadevent === true){
-            return returnDataInDictOrArray(data, ['procEventoCTe', 'evento', 'infEvento', ...array])
+            return returnDataInDictOrArray(data, ['procEventoCTe', 'eventoCTe', 'infEvento', ...array])
         }
     }
 
@@ -33,8 +33,14 @@ class SaveNotes{
                 const noteDecode = new Buffer.from(note, 'base64').toString('ascii')
                 const noteJson = JSON.parse(xmljs.xml2json(noteDecode, {compact: true}))
                 let keyNFOriginal = this.getData(noteJson, ['_attributes', 'Id'])
+                // console.log(JSON.stringify(noteJson, null, 2))
                 let keyNF
                 let nameFile = ''
+                
+                // se não conseguir pegar a chave da nota lança uma exceção
+                if(keyNFOriginal === "" || keyNFOriginal === undefined){
+                    throw "It could'nt get keyNF"
+                }
                 
                 if(this.settings.downloadevent === true){
                     keyNF = keyNFOriginal.substring(8, 52)
@@ -59,7 +65,7 @@ class SaveNotes{
                 }
                 const wayToSaveXML = createFolderToSaveXML(this.settings)
 
-                console.log(`\t\t\t\t- TypeLog: Salvando nota ${index}/${this.notes.length} - ${nameFile}`)
+                console.log(`\t\t\t\t- TypeLog: Skip ${this.settings.skip} - Salvando nota ${parseInt(index)+1}/${this.notes.length} - ${nameFile}`)
 
                 fs.writeFileSync(`${wayToSaveXML}\\${nameFile}.xml`, noteDecode, 'utf8')
 
