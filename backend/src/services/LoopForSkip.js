@@ -76,7 +76,7 @@ class LoopForSkip{
                 qtdNotes = 0
 
                 console.log('\t\t\t\t- TypeLog: error_request')
-                const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'error_request' })
+                const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'error_request', error: error })
                 await postLogSIEG.postData()
                 break
             }
@@ -96,11 +96,16 @@ class LoopForSkip{
             }
 
             if(qtdNotes > 0 && qtdNotes <= 50){
-                const saveNotes = new SaveNotes(notes, this.settings)
-                saveNotes.process()
+                const saveNotes = new SaveNotes(notes, this.settings, dataLog)
+                const hasError = saveNotes.process()
 
-                const postSkips = new PostSkips(filterSkip, { ...filterSkip, numberSkip, qtdNotes })
-                await postSkips.postData()
+                // só salva o skip se não tiver dado erro na hora de salvar as notas, se não sempre vai
+                // processar este skip novamente
+                if(hasError === false){
+                    const postSkips = new PostSkips(filterSkip, { ...filterSkip, numberSkip, qtdNotes })
+                    await postSkips.postData()
+                }
+                
                 if(qtdNotes < 50){
                     break
                 }

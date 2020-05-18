@@ -13,7 +13,8 @@ const LogSIEG = new mongoose.Schema({
     typeCNPJ: String,
     event: Boolean,
     numberSkip: Number,
-    keyNF: String  
+    NF: String,
+    error: String 
 })
 
 // cria a 'tabela' de fato
