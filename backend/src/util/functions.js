@@ -77,3 +77,30 @@ function implementsFilterInURL(baseURL='', filter={}){
     return url
 }
 module.exports.implementsFilterInURL = implementsFilterInURL
+
+function returnDataInDictOrArray(data, array, valueDefault=''){
+    try {
+        if(array.length === 1){
+            return data[array[0]]
+        } else if(array.length === 2){
+            return data[array[0]][array[1]]
+        } else if(array.length === 3){
+            return data[array[0]][array[1]][array[2]]
+        } else if(array.length === 4){
+            return data[array[0]][array[1]][array[2]][array[3]]
+        } else if(array.length === 5){
+            return data[array[0]][array[1]][array[2]][array[3]][array[4]]
+        } else if(array.length === 6){
+            return data[array[0]][array[1]][array[2]][array[3]][array[4]][array[5]]
+        } else if(array.length === 7){
+            return data[array[0]][array[1]][array[2]][array[3]][array[4]][array[5]][array[6]]
+        } else if(array.length === 8){
+            return data[array[0]][array[1]][array[2]][array[3]][array[4]][array[5]][array[6]][array[7]]
+        } else {
+            return valueDefault
+        }
+    } catch (error) {
+        return valueDefault
+    }
+}
+module.exports.returnDataInDictOrArray = returnDataInDictOrArray

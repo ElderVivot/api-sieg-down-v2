@@ -2,6 +2,7 @@ const RequestAPISIEG = require('./RequestAPISIEG')
 const GetSkips = require('./GetSkips')
 const PostSkips = require('./PostSkips')
 const PostLogSIEG = require('./PostLogSIEG')
+const SaveNotes = require('./SaveNotes')
 
 class LoopForSkip{
     constructor(dataRequest){
@@ -54,6 +55,7 @@ class LoopForSkip{
             }
             dataRequest[this.dataRequest.typeCNPJ] = this.dataRequest.cgce_emp
             dataRequest['skip'] = numberSkip
+            this.dataRequest['skip'] = numberSkip
 
             const dataLog = {
                 dateHourInicialLog: this.dataRequest.dateHourInicialLog,
@@ -73,23 +75,30 @@ class LoopForSkip{
                 notes = []
                 qtdNotes = 0
 
+                console.log('\t\t\t\t- TypeLog: error_request')
                 const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'error_request' })
                 await postLogSIEG.postData()
+                break
             }
 
             if(qtdNotes === 0){
+                console.log('\t\t\t\t- TypeLog: not_exists_notes_this_skip')
                 const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'not_exists_notes_this_skip' })
                 await postLogSIEG.postData()
                 break
             }
 
             if(qtdNotesSkip === qtdNotes){
+                console.log('\t\t\t\t- TypeLog: not_exists_new_notes_this_skip')
                 const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'not_exists_new_notes_this_skip' })
                 await postLogSIEG.postData()
                 break
             }
 
             if(qtdNotes > 0 && qtdNotes <= 50){
+                const saveNotes = new SaveNotes(notes, this.dataRequest)
+                saveNotes.process()
+
                 const postSkips = new PostSkips(filterSkip, { ...filterSkip, numberSkip, qtdNotes })
                 await postSkips.postData()
                 if(qtdNotes < 50){
