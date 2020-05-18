@@ -97,7 +97,7 @@ class LoopForSkip{
 
             if(qtdNotes > 0 && qtdNotes <= 50){
                 const saveNotes = new SaveNotes(notes, this.settings, dataLog)
-                const hasError = saveNotes.process()
+                const hasError = await saveNotes.process()
 
                 // só salva o skip se não tiver dado erro na hora de salvar as notas, se não sempre vai
                 // processar este skip novamente

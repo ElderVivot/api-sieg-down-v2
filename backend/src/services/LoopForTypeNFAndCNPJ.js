@@ -6,6 +6,15 @@ const typeNFAndCNPJs = [{
 }, {
     typeNF: 'nfe',
     typeCNPJ: 'cnpjEmit'
+}, {
+    typeNF: 'cte',
+    typeCNPJ: 'cnpjTom'
+}, {
+    typeNF: 'cte',
+    typeCNPJ: 'cnpjEmit'
+}, {
+    typeNF: 'nfce',
+    typeCNPJ: 'cnpjEmit'
 }]
 
 class LoopForTypeNFAndCNPJ{

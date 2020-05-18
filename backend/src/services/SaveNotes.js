@@ -59,17 +59,17 @@ class SaveNotes{
                 }
                 const wayToSaveXML = createFolderToSaveXML(this.settings)
 
-                console.log(`\t\t\t\t- TypeLog: Salvando nota ${index+1}/${this.notes.length} - ${nameFile}`)
+                console.log(`\t\t\t\t- TypeLog: Salvando nota ${index}/${this.notes.length} - ${nameFile}`)
 
                 fs.writeFileSync(`${wayToSaveXML}\\${nameFile}.xml`, noteDecode, 'utf8')
 
-                const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'note_saved', NF: keyNF })
+                const postLogSIEG = new PostLogSIEG({ ...this.dataLog, typeLog: 'note_saved', NF: keyNF })
                 await postLogSIEG.postData()
             } catch (error) {
                 const noteDecode = new Buffer.from(note, 'base64').toString('ascii')
 
                 console.log('\t\t\t\t- TypeLog: error_save_note')
-                const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'error_save_note', error: error, NF: noteDecode})
+                const postLogSIEG = new PostLogSIEG({ ...this.dataLog, typeLog: 'error_save_note', error: error, NF: noteDecode})
                 await postLogSIEG.postData()
                 hasError = true
             }
