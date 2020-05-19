@@ -21,7 +21,7 @@ try {
 class Applicattion{
     constructor(){
         this.getExtractCompanies = []
-        this.competenceInicial = '01/2019'
+        this.competenceInicial = '01/2020'
         this.competenceFinal = '05/2020'
         this.competenceInicialAndFinal = returnCompetenceStartEnd(this.competenceInicial, this.competenceFinal)
         this.settings = { ...settings } // vai conter os dados necessários pra fazer a requisição e alguns outros úteis pro procesamento
