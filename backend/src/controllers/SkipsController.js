@@ -2,19 +2,29 @@ const Skips = require('../models/Skips')
 
 module.exports = {
     async show(req, res){
-        const skips = await Skips.findOne( { ...req.query } )
+        try {
+            const skips = await Skips.findOne( { ...req.query } )
 
-        console.log(` - Skips.show --> ${JSON.stringify(req.query)}`)
+            console.log(` - Skips.show --> ${JSON.stringify(req.query)}`)
 
-        return res.json(skips)
+            return res.json(skips)
+        } catch (error) {
+            console.log('- Skips.show -->' + error)
+            return res.status(400).json({error: '- Skips.show --> Não foi possível buscar os dados'})
+        }
     },
 
-    async store(req, res) {        
-        const skips = await Skips.create( { ...req.body } )
+    async store(req, res) {
+        try {
+            const skips = await Skips.create( { ...req.body } )
 
-        console.log(` - Skips.store --> ${JSON.stringify(req.body)}`)
+            console.log(` - Skips.store --> ${JSON.stringify(req.body)}`)
 
-        return res.json(skips)
+            return res.json(skips)
+        } catch (error) {
+            console.log('- Skips.store -->' + error)
+            return res.status(400).json({error: '- Skips.store --> Não foi possível cadastrar os dados'})  
+        }
     },
 
     async update(req, res) {
@@ -27,8 +37,8 @@ module.exports = {
     
             return res.json(skips)
         } catch (error) {
-            console.log(error)
-            return res.status(400).json({error: 'Não foi possível atualizar os dados'})        
+            console.log('- Skips.update -->' + error)
+            return res.status(400).json({error: '- Skips.update --> Não foi possível atualizar os dados'})        
         }        
     },
 }
