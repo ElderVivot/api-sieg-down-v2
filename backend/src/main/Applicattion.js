@@ -1,15 +1,15 @@
 // Link da documentação da api https://intercom.help/sieg/pt-BR/articles/2343240-download-de-xmls-em-lote
 
-const { returnCompetenceStartEnd } = require('./util/functions')
-const GetExtractCompanies = require('./services/GetExtractCompanies')
-const LoopForCompetence = require('./services/LoopForCompetences')
-const PostProcessFrequency = require('./services/PostProcessFrequency')
+const { returnCompetenceStartEnd } = require('../util/functions')
+const GetExtractCompanies = require('../services/GetExtractCompanies')
+const LoopForCompetence = require('../services/LoopForCompetences')
+const PostProcessFrequency = require('../services/PostProcessFrequency')
 
 // é necessário criar um arquivo settings.json com os dados da requisição, se o arquivo não existir
 // seta configurações gerais. Pois este settings não vai subir pro gitHub
 let settings = {}
 try {
-    settings = require('./settings.json')
+    settings = require('../settings.json')
 } catch (error) {
     settings = {
         apikey: "apikeycorrect",
@@ -21,8 +21,8 @@ try {
 class Applicattion{
     constructor(){
         this.getExtractCompanies = []
-        this.competenceInicial = '01/2020'
-        this.competenceFinal = '05/2020'
+        this.competenceInicial = process.argv[2]
+        this.competenceFinal = process.argv[3]
         this.competenceInicialAndFinal = returnCompetenceStartEnd(this.competenceInicial, this.competenceFinal)
         this.settings = { ...settings } // vai conter os dados necessários pra fazer a requisição e alguns outros úteis pro procesamento
         // let dateNow = new Date()
