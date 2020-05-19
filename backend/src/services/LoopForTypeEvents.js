@@ -12,6 +12,7 @@ class LoopForTypeEvents{
     }
 
     async process(){
+        const promisses = []
         for(let typeEvent of typeEvents){
             const event = typeEvent['events']
 
@@ -20,8 +21,9 @@ class LoopForTypeEvents{
             this.settings['downloadevent'] = event
 
             const loopForTypeNFAndCNPJ = new LoopForTypeNFAndCNPJ(this.settings)
-            await loopForTypeNFAndCNPJ.process()
+            promisses.push(loopForTypeNFAndCNPJ.process())
         }
+        await Promise.all(promisses)
     }
 }
 
