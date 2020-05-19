@@ -62,7 +62,8 @@ class LoopForSkip{
                 sequencial: this.settings.sequencial,
                 dateHourProcessLog: dateHourProcessLog,
                 numberSkip: numberSkip,
-                ...filterSkip
+                ...filterSkip,
+                cgce_emp: this.settings.cgce_emp
             }
             
             let notes
@@ -76,7 +77,7 @@ class LoopForSkip{
                 qtdNotes = 0
 
                 console.log('\t\t\t\t- TypeLog: error_request')
-                const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'error_request', error: error })
+                const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'error_request', error: 'Erro ao fazer requisição no SIEG.' })
                 await postLogSIEG.postData()
                 break
             }
