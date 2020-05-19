@@ -7,6 +7,7 @@ const LogSIEG = new mongoose.Schema({
     dateHourProcessLog: String,
     typeLog: String,
     codi_emp: Number,
+    cgce_emp: String,
     year: Number,
     month: Number,
     typeNF: String,
@@ -14,7 +15,7 @@ const LogSIEG = new mongoose.Schema({
     event: Boolean,
     numberSkip: Number,
     NF: String,
-    error: String 
+    error: String
 })
 
 // cria a 'tabela' de fato
