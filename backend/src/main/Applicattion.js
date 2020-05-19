@@ -67,6 +67,8 @@ class Applicattion{
             dateHourInicialLog: this.settings['dateHourInicialLog'],
             sequencial: this.sequencial,
             dateHourInicialProcessLog,
+            competenceInicial: this.competenceInicial,
+            competenceFinal: this.competenceFinal,
             dateHourFinalProcessLog
         })
         await postProcessFrequency.postData()

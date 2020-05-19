@@ -5,6 +5,8 @@ const ProcessFrequency = new mongoose.Schema({
     dateHourInicialLog: String,
     sequencial: Number,
     dateHourInicialProcessLog: String,
+    competenceInicial: String,
+    competenceFinal: String,
     dateHourFinalProcessLog: String
 })
 
