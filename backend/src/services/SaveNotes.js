@@ -15,9 +15,10 @@ class SaveNotes{
         if( ( this.settings.typeNF === 'nfe' || this.settings.typeNF === 'nfce' ) && this.settings.downloadevent === false){
             return returnDataInDictOrArray(data, ['nfeProc', 'NFe', 'infNFe', ...array])
         } else if(( this.settings.typeNF === 'nfe' || this.settings.typeNF === 'nfce' ) && this.settings.downloadevent === true){
-            return returnDataInDictOrArray(data, ['procEventoNFe', 'evento', 'infEvento', ...array])
+            const optionOne = returnDataInDictOrArray(data, ['procEventoNFe', 'evento', 'infEvento', ...array]) || returnDataInDictOrArray(data, ['envEvento', 'evento', 'infEvento', ...array]) 
+            return optionOne || returnDataInDictOrArray(data, ['retConsSitNFe', 'procEventoNFe', 'evento', 'infEvento', ...array])
         } else if(this.settings.typeNF === 'cte' && this.settings.downloadevent === false){
-            return returnDataInDictOrArray(data, ['cteProc', 'CTe', 'infCte', ...array])
+            return returnDataInDictOrArray(data, ['cteProc', 'CTe', 'infCte', ...array]) || returnDataInDictOrArray(data, ['cteOSProc', 'CTeOS', 'infCte', ...array])
         } else if(this.settings.typeNF === 'cte' && this.settings.downloadevent === true){
             return returnDataInDictOrArray(data, ['procEventoCTe', 'eventoCTe', 'infEvento', ...array])
         }

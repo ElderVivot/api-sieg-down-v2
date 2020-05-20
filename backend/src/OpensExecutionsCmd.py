@@ -15,8 +15,8 @@ from util.functions import returnCompetenceStartEnd, returnMonthsOfYear
 
 class OpenExecutionsCmd():
     def __init__(self):
-        self._competenceInicial = '01/2019' #input('- Informe a competência inicial (mm/aaaa): ')
-        self._competenceFinal = '05/2020' #input('- Informe a competência final (mm/aaaa): ')
+        self._competenceInicial = input('- Informe a competência inicial (mm/aaaa): ')
+        self._competenceFinal = input('- Informe a competência final (mm/aaaa): ')
         self._competenceInicialAndFinal = returnCompetenceStartEnd(self._competenceInicial, self._competenceFinal)
         self._startMonth = self._competenceInicialAndFinal['monthInicial']
         self._startYear = self._competenceInicialAndFinal['yearInicial']
