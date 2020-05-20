@@ -11,6 +11,7 @@ sys.path.append(os.path.join(fileDir, 'backend/src/extract'))
 sys.path.append(os.path.join(fileDir, 'backend/src'))
 
 from util.functions import returnCompetenceStartEnd, returnMonthsOfYear
+from extract.ExtractCompanies import ExtractCompanies
 
 
 class OpenExecutionsCmd():
@@ -22,6 +23,9 @@ class OpenExecutionsCmd():
         self._startYear = self._competenceInicialAndFinal['yearInicial']
         self._endMonth = self._competenceInicialAndFinal['monthFinal']
         self._endYear = self._competenceInicialAndFinal['yearFinal']
+
+        extractCompanies = ExtractCompanies()
+        extractCompanies.exportData()
 
     def process(self):
         year = self._startYear

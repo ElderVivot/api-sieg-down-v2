@@ -49,9 +49,3 @@ class ExtractCompanies():
                 self._cursor.close()
             self._ConnectDB.closeConnection()
             self._connectionMongo.closeConnection()
-
-
-if __name__ == "__main__":
-    main = ExtractCompanies()
-    main.exportData()
-
