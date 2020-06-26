@@ -96,7 +96,7 @@ class LoopForSkip{
                 break
             }
 
-            if(qtdNotes > 0 && qtdNotes <= 50){
+            if(qtdNotes > 0){
                 const saveNotes = new SaveNotes(notes, this.settings, dataLog)
                 const hasError = await saveNotes.process()
 
