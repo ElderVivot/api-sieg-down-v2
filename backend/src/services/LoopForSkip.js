@@ -77,22 +77,22 @@ class LoopForSkip{
                 qtdNotes = 0
 
                 console.log('\t\t\t\t- TypeLog: error_request')
-                const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'error_request', error: 'Erro ao fazer requisição no SIEG.' })
-                await postLogSIEG.postData()
+                // const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'error_request', error: 'Erro ao fazer requisição no SIEG.' })
+                // await postLogSIEG.postData()
                 break
             }
 
             if(qtdNotes === 0){
                 console.log('\t\t\t\t- TypeLog: not_exists_notes_this_skip')
-                const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'not_exists_notes_this_skip' })
-                await postLogSIEG.postData()
+                // const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'not_exists_notes_this_skip' })
+                // await postLogSIEG.postData()
                 break
             }
 
-            if(qtdNotesSkip === qtdNotes){
+            if(qtdNotesSkip === qtdNotes && qtdNotesSkip !== 50){
                 console.log('\t\t\t\t- TypeLog: not_exists_new_notes_this_skip')
-                const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'not_exists_new_notes_this_skip' })
-                await postLogSIEG.postData()
+                // const postLogSIEG = new PostLogSIEG({ ...dataLog, typeLog: 'not_exists_new_notes_this_skip' })
+                // await postLogSIEG.postData()
                 break
             }
 
