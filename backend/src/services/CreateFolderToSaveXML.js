@@ -29,7 +29,7 @@ const createFolderToSaveXML = (settings) => {
         typeNF = 'NFS-e'
     }
   
-    let namePasteCompanie = `${nameEmp.substring(0, 70)} - ${codiEmp}`
+    let namePasteCompanie = `${nameEmp.trim().normalize('NFD').replace(/([\u0300-\u036f]|[^0-9a-zA-Z ])/g, '').toUpperCase().substring(0, 70)} - ${codiEmp}`
     fs.existsSync(`${wayToSaveXMLs}\\${namePasteCompanie}`) || fs.mkdirSync(`${wayToSaveXMLs}\\${namePasteCompanie}`)
     wayToSaveXMLs = `${wayToSaveXMLs}\\${namePasteCompanie}`
   
