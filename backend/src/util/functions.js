@@ -104,3 +104,17 @@ function returnDataInDictOrArray(data, array, valueDefault=''){
     }
 }
 module.exports.returnDataInDictOrArray = returnDataInDictOrArray
+
+function minimalizeSpaces (text) {
+    let result = text
+    while (result.indexOf('  ') >= 0) {
+        result = result.replace('  ', ' ')
+    }
+    return result.trim()
+}
+
+function treateTextField (value) {
+    const result = value.trim().normalize('NFD').replace(/([\u0300-\u036f]|[^0-9a-zA-Z ])/g, '').toUpperCase()
+    return minimalizeSpaces(result)
+}
+module.exports.treateTextField = treateTextField
